@@ -1,0 +1,79 @@
+entity {
+	entityDef mod_ammo_shells_{{{entityDefNum}}} {
+	inherit = "pickup/ammo/shells";
+	class = "idProp2";
+	expandInheritance = false;
+	poolCount = 0;
+	poolGranularity = 2;
+	networkReplicated = false;
+	disableAIPooling = false;
+	edit = {
+		renderModelInfo = {
+			model = "art/pickups/ammo/ammo_shotgun_01.lwo";
+			contributesToLightProbeGen = false;
+			ignoreDesaturate = true;
+			emissiveScale = 0.2;
+			scale = {
+				x = 1.39999998;
+				y = 1.39999998;
+				z = 1.39999998;
+			}
+		}
+		spawn_statIncreases = {
+			num = 1;
+			item[0] = {
+				stat = "STAT_ITEMS_SPAWNED";
+				increase = 1;
+			}
+		}
+		equipOnPickup = false;
+		lootStyle = "LOOT_TOUCH";
+		triggerDef = "trigger/props/pickup";
+		isStatic = false;
+		canBePossessed = true;
+		removeFlag = "RMV_CHECKPOINT_ALLOW_MS";
+		flags = {
+			canBecomeDormant = true;
+		}
+		fxDecl = "pickups/ammo_shotgun";
+		difficultyScaleType = "DST_PICKUP";
+		updateFX = true;
+		pickup_statIncreases = {
+			num = 2;
+			item[0] = {
+				stat = "STAT_AMMO_PICKUP";
+				increase = 1;
+			}
+			item[1] = {
+				stat = "STAT_PLACED_AMMO_PICKUP";
+				increase = 1;
+			}
+		}
+		useableComponentDecl = "propitem/ammo/shotgun_10";
+		spawnPosition = {
+			x = {{{coordX}}};
+			y = {{{coordY}}};
+			z = {{{coordZ}}};
+		}
+		spawnOrientation = { // 0 {{{yaw}}} 0
+			mat = {
+				mat[0] = {
+					x = {{{mat0X}}};
+					y = {{{mat0Y}}};
+					z = {{{mat0Z}}};
+				}
+				mat[1] = {
+					x = {{{mat1X}}};
+					y = {{{mat1Y}}};
+					z = {{{mat1Z}}};
+				}
+				mat[2] = {
+					x = {{{mat2X}}};
+					y = {{{mat2Y}}};
+					z = {{{mat2Z}}};
+				}
+			}
+		}
+	}
+}
+}

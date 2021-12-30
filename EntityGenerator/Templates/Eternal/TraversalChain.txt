@@ -1,0 +1,91 @@
+entity {
+	entityDef mod_traversal_chain_start_{{{entityNumber}}} {
+	class = "idInfo_TraversalChain";
+	expandInheritance = false;
+	poolCount = 0;
+	poolGranularity = 2;
+	networkReplicated = false;
+	disableAIPooling = false;
+	edit = {
+		monsterType = "TRAVERSALMONSTERTYPE_ARACHNATRON";
+		animWeb = "animweb/characters/monsters/arachnotron";
+		spawnPosition = {
+			x = {{startCoordX}};
+			y = {{startCoordY}};
+			z = {{startCoordZ}};
+		}
+		traversalFlags = "TRAVERSAL_ENABLED DELTA_CORRECT";
+		links = {
+			num = 1;
+			item[0] = {
+				target = "mod_traversal_chain_mid_{{{entityNumber}}}";
+				anim = "animweb/characters/monsters/arachnotron/ceiling_hangout/floor_to_ceiling";
+			}
+		}
+	}
+}
+}
+entity {
+	entityDef mod_traversal_chain_mid_{{{entityNumber}}} {
+	class = "idInfo_TraversalChain";
+	expandInheritance = false;
+	poolCount = 0;
+	poolGranularity = 2;
+	networkReplicated = false;
+	disableAIPooling = false;
+	edit = {
+		monsterType = "TRAVERSALMONSTERTYPE_ARACHNATRON";
+		animWeb = "animweb/characters/monsters/arachnotron";
+		spawnPosition = {
+			x = {{midCoordX}};
+			y = {{midCoordY}};
+			z = {{midCoordZ}};
+		}
+		spawnOrientation = { // {{{pitch}}} {{{yaw}}} 0; values were rounded to nearest 5°
+			mat = {
+				mat[0] = {
+					x = {{{mat0X}}};
+					y = {{{mat0Y}}};
+					z = {{{mat0Z}}};
+				}
+				mat[1] = {
+					x = {{{mat1X}}};
+					y = {{{mat1Y}}};
+					z = {{{mat1Z}}};
+				}
+				mat[2] = {
+					x = {{{mat2X}}};
+					y = {{{mat2Y}}};
+					z = {{{mat2Z}}};
+				}
+			}
+		}
+		traversalFlags = "TRAVERSAL_ENABLED DELTA_CORRECT";
+		links = {
+			num = 1;
+			item[0] = {
+				target = "mod_traversal_point_{{{entityNumber}}}";
+				anim = "animweb/characters/monsters/arachnotron/ceiling_hangout/ceiling_to_floor";
+			}
+		}
+		idleAnim = "animweb/characters/monsters/arachnotron/ceiling_hangout/ceiling_idle";
+	}
+}
+}
+entity {
+	entityDef mod_traversal_point_{{{entityNumber}}} {
+	class = "idInfo_TraversalPoint";
+	expandInheritance = false;
+	poolCount = 0;
+	poolGranularity = 2;
+	networkReplicated = false;
+	disableAIPooling = false;
+	edit = {
+		spawnPosition = {
+			x = {{endCoordX}};
+			y = {{endCoordY}};
+			z = {{endCoordZ}};
+		}
+	}
+}
+}

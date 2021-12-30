@@ -1,0 +1,793 @@
+entity {
+	instanceId = {{{instanceID}}};
+	originalName = "shock_trap_start";
+	entityDef game_shock_trap_start_{{{instanceID}}} {
+	inherit = "target/relay";
+	class = "idTarget_Count";
+	expandInheritance = false;
+	poolCount = 0;
+	poolGranularity = 2;
+	networkReplicated = false;
+	disableAIPooling = false;
+	edit = {
+		flags = {
+			noFlood = true;
+		}
+		networkSerializeTransforms = false;
+		count = 1;
+		spawnPosition = {
+			x = {{{coordX}}};
+			y = {{{coordY}}};
+			z = {{{coordZ}}};
+		}
+		spawnOrientation = {
+			mat = {
+				mat[0] = {
+					x = 0.652196;
+					y = 0.758051;
+					z = 0.000000;
+				}
+				mat[1] = {
+					x = -0.758051;
+					y = 0.652196;
+					z = 0.000000;
+				}
+				mat[2] = {
+					x = 0.000000;
+					y = 0.000000;
+					z = 1.000000;
+				}
+			}
+		}
+		repeat = true;
+		renderModelInfo = {
+			scale = {
+				x = 1.000000;
+				y = 1.000000;
+				z = 1.000000;
+			}
+		}
+	}
+}
+}
+entity {
+	instanceId = {{{instanceID}}};
+	originalName = "shock_trap_stop";
+	entityDef game_shock_trap_stop_{{{instanceID}}} {
+	inherit = "target/relay";
+	class = "idTarget_Count";
+	expandInheritance = false;
+	poolCount = 0;
+	poolGranularity = 2;
+	networkReplicated = false;
+	disableAIPooling = false;
+	edit = {
+		flags = {
+			noFlood = true;
+		}
+		networkSerializeTransforms = false;
+		count = 1;
+		spawnPosition = {
+			x = {{{coordX}}};
+			y = {{{coordY}}};
+			z = {{{coordZ}}};
+		}
+		spawnOrientation = {
+			mat = {
+				mat[0] = {
+					x = 0.652196;
+					y = 0.758051;
+					z = 0.000000;
+				}
+				mat[1] = {
+					x = -0.758051;
+					y = 0.652196;
+					z = 0.000000;
+				}
+				mat[2] = {
+					x = 0.000000;
+					y = 0.000000;
+					z = 1.000000;
+				}
+			}
+		}
+		repeat = true;
+		renderModelInfo = {
+			scale = {
+				x = 1.000000;
+				y = 1.000000;
+				z = 1.000000;
+			}
+		}
+	}
+}
+}
+entity {
+	instanceId = {{{instanceID}}};
+	originalName = "volume_damage_1";
+	entityDef game_volume_damage_1_{{{instanceID}}} {
+	inherit = "volume/damage";
+	class = "idVolume_Damage";
+	expandInheritance = false;
+	poolCount = 0;
+	poolGranularity = 2;
+	networkReplicated = false;
+	disableAIPooling = false;
+	edit = {
+		spawnPosition = {
+			x = {{{coordX}}};
+			y = {{{coordY}}};
+			z = {{{coordZ1}}};
+		}
+		renderModelInfo = {
+			model = NULL;
+			scale = {
+				x = 1.000000;
+				y = 1.000000;
+				z = 1.000000;
+			}
+		}
+		clipModelInfo = {
+			clipModelName = "maps/game/sp/e1m3_cult/e1m3_cult/game_volume_damage_1_486168567";
+		}
+		startEnabled = false;
+		damageDecl = "damage/hazard/electro_post";
+		applyDamageToPlayer = true;
+		applyDamageToAi = false;
+	}
+}
+}
+entity {
+	instanceId = {{{instanceID}}};
+	originalName = "pole";
+	entityDef game_pole_{{{instanceID}}} {
+	inherit = "func/dynamic";
+	class = "idDynamicEntity";
+	expandInheritance = false;
+	poolCount = 0;
+	poolGranularity = 2;
+	networkReplicated = false;
+	disableAIPooling = false;
+	edit = {
+		spawnPosition = {
+			x = {{{coordX}}};
+			y = {{{coordY}}};
+			z = {{{coordZ2}}};
+		}
+		spawnOrientation = {
+			mat = {
+				mat[0] = {
+					y = 0.000000;
+					x = 1.000000;
+					z = 0.000000;
+				}
+				mat[1] = {
+					x = -0.000000;
+					y = 1.000000;
+					z = 0.000000;
+				}
+				mat[2] = {
+					x = 0.000000;
+					y = 0.000000;
+					z = 1.000000;
+				}
+			}
+		}
+		renderModelInfo = {
+			model = "art/objects/hazard/hazard_electric.lwo";
+			scale = {
+				x = 2.000000;
+				y = 2.000000;
+				z = 2.000000;
+			}
+			emissiveScale = 25;
+		}
+		clipModelInfo = {
+			type = "CLIPMODEL_BOX";
+			clipModelName = "art/maps/user/souders/mars_core/uac_pole_light_full.lwo";
+			contentsFilter = {
+				playerClip = false;
+				monsterClip = false;
+			}
+		}
+		dormancy = {
+			allowPvsDormancy = false;
+		}
+		dynamicMoveParms = {
+			noPush = false;
+		}
+		dynamicMoveActive = true;
+	}
+}
+}
+entity {
+	instanceId = {{{instanceID}}};
+	originalName = "light_point_red";
+	entityDef game_light_point_red_{{{instanceID}}} {
+	inherit = "light/point";
+	class = "idLight";
+	expandInheritance = false;
+	poolCount = 0;
+	poolGranularity = 2;
+	networkReplicated = false;
+	disableAIPooling = false;
+	edit = {
+		dormancy = {
+			distance = 80;
+			playerDistance = 80;
+			playerRearwardDistance = 80;
+			allowDistanceDormancy = true;
+		}
+		spawnPosition = {
+			x = {{{coordX}}};
+			y = {{{coordY}}};
+			z = {{{coordZ3}}};
+		}
+		spawnOrientation = {
+			mat = {
+				mat[0] = {
+					y = -0.000000;
+					x = 1.000000;
+					z = -0.000000;
+				}
+				mat[1] = {
+					x = 0.000000;
+					y = 1.000000;
+					z = 0.000000;
+				}
+				mat[2] = {
+					x = 0.000000;
+					y = -0.000000;
+					z = 1.000000;
+				}
+			}
+		}
+		lightColor = {
+			g = 0.305882007;
+			b = 0.199999988;
+		}
+		lightIntensity = 4;
+		lightRadius = {
+			x = 5;
+			y = 5;
+			z = 3.11479831;
+		}
+		lightCenter = {
+			z = -1.5;
+		}
+		lightFalloff = 5;
+		clipVolumeFalloff = 0;
+		userClipVolume = true;
+		particleLightScale = 0;
+		startOff = true;
+		renderModelInfo = {
+			scale = {
+				x = 1.000000;
+				y = 1.000000;
+				z = 1.000000;
+			}
+		}
+	}
+}
+}
+entity {
+	instanceId = {{{instanceID}}};
+	originalName = "soundentity_pole_down";
+	entityDef game_soundentity_pole_down_{{{instanceID}}} {
+	inherit = "sound/soundentity";
+	class = "idSoundEntity";
+	expandInheritance = false;
+	poolCount = 0;
+	poolGranularity = 2;
+	networkReplicated = false;
+	disableAIPooling = false;
+	edit = {
+		temporarySoundEvent = true;
+		spawnPosition = {
+			x = {{{coordX}}};
+			y = {{{coordY}}};
+			z = {{{coordZ4}}};
+		}
+		spawnOrientation = {
+			mat = {
+				mat[0] = {
+					y = -0.000000;
+					x = 1.000000;
+					z = -0.000000;
+				}
+				mat[1] = {
+					x = 0.000000;
+					y = 1.000000;
+					z = 0.000000;
+				}
+				mat[2] = {
+					x = 0.000000;
+					y = -0.000000;
+					z = 1.000000;
+				}
+			}
+		}
+		startEvents = {
+			num = 1;
+		}
+		stopEvents = {
+			num = 1;
+			item[0] = "play_electric_pole_close";
+		}
+		renderModelInfo = {
+			scale = {
+				x = 1.000000;
+				y = 1.000000;
+				z = 1.000000;
+			}
+		}
+	}
+}
+}
+entity {
+	instanceId = {{{instanceID}}};
+	originalName = "soundentity_electricity";
+	entityDef game_soundentity_electricity_{{{instanceID}}} {
+	inherit = "sound/soundentity";
+	class = "idSoundEntity";
+	expandInheritance = false;
+	poolCount = 0;
+	poolGranularity = 2;
+	networkReplicated = false;
+	disableAIPooling = false;
+	edit = {
+		temporarySoundEvent = true;
+		spawnPosition = {
+			x = {{{coordX}}};
+			y = {{{coordY}}};
+			z = {{{coordZ4}}};
+		}
+		spawnOrientation = {
+			mat = {
+				mat[0] = {
+					y = -0.000000;
+					x = 1.000000;
+					z = -0.000000;
+				}
+				mat[1] = {
+					x = 0.000000;
+					y = 1.000000;
+					z = 0.000000;
+				}
+				mat[2] = {
+					x = 0.000000;
+					y = -0.000000;
+					z = 1.000000;
+				}
+			}
+		}
+		startEvents = {
+			num = 1;
+			item[0] = "play_electric_pole_shock";
+		}
+		stopEvents = {
+			num = 1;
+			item[0] = "stop_electric_pole_shock";
+		}
+		renderModelInfo = {
+			scale = {
+				x = 1.000000;
+				y = 1.000000;
+				z = 1.000000;
+			}
+		}
+	}
+}
+}
+entity {
+	instanceId = {{{instanceID}}};
+	originalName = "soundentity_pole_up";
+	entityDef game_soundentity_pole_up_{{{instanceID}}} {
+	inherit = "sound/soundentity";
+	class = "idSoundEntity";
+	expandInheritance = false;
+	poolCount = 0;
+	poolGranularity = 2;
+	networkReplicated = false;
+	disableAIPooling = false;
+	edit = {
+		temporarySoundEvent = true;
+		spawnPosition = {
+			x = {{{coordX}}};
+			y = {{{coordY}}};
+			z = {{{coordZ4}}};
+		}
+		spawnOrientation = {
+			mat = {
+				mat[0] = {
+					y = -0.000000;
+					x = 1.000000;
+					z = -0.000000;
+				}
+				mat[1] = {
+					x = 0.000000;
+					y = 1.000000;
+					z = 0.000000;
+				}
+				mat[2] = {
+					x = 0.000000;
+					y = -0.000000;
+					z = 1.000000;
+				}
+			}
+		}
+		startEvents = {
+			num = 1;
+			item[0] = "play_electric_pole_start";
+		}
+		stopEvents = {
+			num = 1;
+			item[0] = "play_electric_pole_rise_stop_alt";
+		}
+		renderModelInfo = {
+			scale = {
+				x = 1.000000;
+				y = 1.000000;
+				z = 1.000000;
+			}
+		}
+	}
+}
+}
+entity {
+	instanceId = {{{instanceID}}};
+	originalName = "meteors_light_spot_1";
+	entityDef game_meteors_light_spot_1_{{{instanceID}}} {
+	inherit = "light/spot";
+	class = "idLight";
+	expandInheritance = false;
+	poolCount = 0;
+	poolGranularity = 2;
+	networkReplicated = false;
+	disableAIPooling = false;
+	edit = {
+		dormancy = {
+			distance = 80;
+			playerDistance = 80;
+			playerRearwardDistance = 80;
+			allowDistanceDormancy = true;
+		}
+		lightType = "LIGHT_POINT";
+		clipVolumeFalloff = 100;
+		spawnPosition = {
+			x = {{{coordX}}};
+			y = {{{coordY}}};
+			z = {{{coordZ5}}};
+		}
+		spawnOrientation = {
+			mat = {
+				mat[0] = {
+					x = -0.000001;
+					y = -1.000000;
+					z = 0.000000;
+				}
+				mat[1] = {
+					x = 1.000000;
+					y = -0.000001;
+					z = 0.000000;
+				}
+				mat[2] = {
+					x = 0.000000;
+					y = 0.000000;
+					z = 1.000000;
+				}
+			}
+		}
+		targets = {
+			num = 2;
+			item[0] = "game_pole_{{{instanceID}}}";
+			item[1] = "game_base_{{{instanceID}}}";
+		}
+		lightColor = {
+			r = 0;
+			g = 0.780391991;
+		}
+		lightIntensity = 0;
+		lightRadius = {
+			x = 0.25;
+			y = 0.25;
+			z = 0.25;
+		}
+		lightFalloff = 0.25;
+		renderModelInfo = {
+			scale = {
+				x = 1.000000;
+				y = 1.000000;
+				z = 1.000000;
+			}
+		}
+	}
+}
+}
+entity {
+	instanceId = {{{instanceID}}};
+	originalName = "base";
+	entityDef game_base_{{{instanceID}}} {
+	inherit = "func/dynamic";
+	class = "idDynamicEntity";
+	expandInheritance = false;
+	poolCount = 0;
+	poolGranularity = 2;
+	networkReplicated = false;
+	disableAIPooling = false;
+	edit = {
+		spawnOrientation = {
+			mat = {
+				mat[0] = {
+					y = 0.000000;
+					x = 1.000000;
+					z = 0.000000;
+				}
+				mat[1] = {
+					x = -0.000000;
+					y = 1.000000;
+					z = 0.000000;
+				}
+				mat[2] = {
+					x = 0.000000;
+					y = 0.000000;
+					z = 1.000000;
+				}
+			}
+		}
+		renderModelInfo = {
+			model = "art/objects/hazard/hazard_electric_base.lwo";
+			scale = {
+				x = 2.000000;
+				y = 2.000000;
+				z = 2.000000;
+			}
+			emissiveScale = 25;
+		}
+		clipModelInfo = {
+			clipModelName = "art/objects/hazard/hazard_electric_base.lwo";
+			contentsFilter = {
+				playerClip = false;
+				monsterClip = false;
+			}
+		}
+		dormancy = {
+			allowPvsDormancy = false;
+		}
+		dynamicMoveActive = true;
+		spawnPosition = {
+			x = {{{coordX}}};
+			y = {{{coordY}}};
+			z = {{{coordZ}}};
+		}
+	}
+}
+}
+entity {
+	instanceId = {{{instanceID}}};
+	originalName = "steam_jet_puff_s_1";
+	entityDef game_steam_jet_puff_s_1_{{{instanceID}}} {
+	inherit = "func/emitter";
+	class = "idParticleEmitter";
+	expandInheritance = false;
+	poolCount = 0;
+	poolGranularity = 2;
+	networkReplicated = false;
+	disableAIPooling = false;
+	edit = {
+		flags = {
+			canBecomeDormant = true;
+		}
+		dormancy = {
+			delay = 5;
+			distance = 78.029007;
+		}
+		fadeIn = 0;
+		fadeOut = 0;
+		renderModelInfo = {
+			scale = {
+				x = 0.500000;
+				y = 0.500000;
+				z = 0.500000;
+			}
+			color = {
+				a = 0.5;
+			}
+		}
+		startOff = true;
+		cycleTrigger = true;
+		particleSystem = "env_smoke/steam_jet_puff_s";
+		spawnPosition = {
+			x = {{{coordX}}};
+			y = {{{coordY}}};
+			z = {{{coordZ}}};
+		}
+		spawnOrientation = {
+			mat = {
+				mat[0] = {
+					x = 1.000000;
+					y = 0.000000;
+					z = 0.000000;
+				}
+				mat[1] = {
+					x = 0.000000;
+					y = 1.000000;
+					z = 0.000000;
+				}
+				mat[2] = {
+					x = 0.000000;
+					y = 0.000000;
+					z = 1.000000;
+				}
+			}
+		}
+	}
+}
+}
+entity {
+	instanceId = {{{instanceID}}};
+	originalName = "func_emitter_electricity";
+	entityDef game_func_emitter_electricity_{{{instanceID}}} {
+	inherit = "func/emitter";
+	class = "idParticleEmitter";
+	expandInheritance = false;
+	poolCount = 0;
+	poolGranularity = 2;
+	networkReplicated = false;
+	disableAIPooling = false;
+	edit = {
+		flags = {
+			canBecomeDormant = true;
+		}
+		dormancy = {
+			delay = 5;
+			distance = 78.029007;
+		}
+		fadeIn = 0;
+		fadeOut = 0;
+		spawnOrientation = {
+			mat = {
+				mat[0] = {
+					y = -0.000000;
+					x = 1.000000;
+					z = -0.000000;
+				}
+				mat[1] = {
+					x = 0.000000;
+					y = 1.000000;
+					z = 0.000000;
+				}
+				mat[2] = {
+					x = 0.000000;
+					y = -0.000000;
+					z = 1.000000;
+				}
+			}
+		}
+		renderModelInfo = {
+			color = {
+				g = 0.215685993;
+				b = 0.0588235036;
+			}
+			scale = {
+				x = 1.000000;
+				y = 1.000000;
+				z = 1.000000;
+			}
+		}
+		startOff = true;
+		particleSystem = "map_e2m3_core/electric_hazard";
+		spawnPosition = {
+			x = {{{coordX}}};
+			y = {{{coordY}}};
+			z = {{{coordZ}}};
+		}
+	}
+}
+}
+entity {
+	instanceId = {{{instanceID}}};
+	originalName = "meteors_info_null_1";
+	entityDef game_meteors_info_null_1_{{{instanceID}}} {
+	inherit = "info/null";
+	class = "idInfo";
+	expandInheritance = false;
+	poolCount = 0;
+	poolGranularity = 2;
+	networkReplicated = false;
+	disableAIPooling = false;
+	edit = {
+		spawnOrientation = {
+			mat = {
+				mat[0] = {
+					y = -0.000000;
+					x = 1.000000;
+					z = -0.000000;
+				}
+				mat[1] = {
+					x = 0.000000;
+					y = 1.000000;
+					z = 0.000000;
+				}
+				mat[2] = {
+					x = 0.000000;
+					y = -0.000000;
+					z = 1.000000;
+				}
+			}
+		}
+		spawnPosition = {
+			x = {{{coordX}}};
+			y = {{{coordY}}};
+			z = {{{coordZ}}};
+		}
+		renderModelInfo = {
+			scale = {
+				x = 1.000000;
+				y = 1.000000;
+				z = 1.000000;
+			}
+		}
+	}
+}
+}
+entity {
+	instanceId = {{{instanceID}}};
+	originalName = "info_logic_electro_post";
+	entityDef game_info_logic_electro_post_{{{instanceID}}} {
+	inherit = "info/logic";
+	class = "idLogicEntity";
+	expandInheritance = false;
+	poolCount = 0;
+	poolGranularity = 2;
+	networkReplicated = false;
+	disableAIPooling = false;
+	edit = {
+		dormancy = {
+			delay = 5;
+			distance = 100;
+		}
+		spawnPosition = {
+			x = {{{coordX}}};
+			y = {{{coordY}}};
+			z = {{{coordZ}}};
+		}
+		spawnOrientation = {
+			mat = {
+				mat[0] = {
+					x = 0.652196;
+					y = 0.758051;
+					z = 0.000000;
+				}
+				mat[1] = {
+					x = -0.758051;
+					y = 0.652196;
+					z = 0.000000;
+				}
+				mat[2] = {
+					x = 0.000000;
+					y = 0.000000;
+					z = 1.000000;
+				}
+			}
+		}
+		logic = {
+			decl = "maps/prefabs/maps/e2m3_core/uac/electro_post/info_logic_electro_post";
+			properties = {
+				Restart_delay = 3000;
+				damage_duration = 4;
+				Movement_time = 1500;
+				Rotation_speed = 600;
+				Stagger_start_time_ = false;
+			}
+		}
+		renderModelInfo = {
+			scale = {
+				x = 1.000000;
+				y = 1.000000;
+				z = 1.000000;
+			}
+		}
+	}
+}
+}

@@ -1,0 +1,155 @@
+entity {
+	entityDef mod_teleporter_trigger_{{{entityNumber}}} {
+	inherit = "trigger/teleporter";
+	class = "idTrigger_Teleporter";
+	expandInheritance = false;
+	poolCount = 0;
+	poolGranularity = 2;
+	networkReplicated = true;
+	disableAIPooling = false;
+	edit = {
+		clientCanActivate = true;
+		fxExtraCondition = "FX_EXTRA_COND_MAX";
+		sounds = {
+			activated = "play_arena_teleporter_use";
+		}
+		spawnPosition = {
+			x = {{coordX}};
+			y = {{coordY}};
+			z = {{coordZ}};
+		}
+		spawnOrientation = { // 0 {{{yawStart}}} 0
+			mat = {
+				mat[0] = {
+					x = {{{mat0XStart}}};
+					y = {{{mat0YStart}}};
+					z = {{{mat0ZStart}}};
+				}
+				mat[1] = {
+					x = {{{mat1XStart}}};
+					y = {{{mat1YStart}}};
+					z = {{{mat1ZStart}}};
+				}
+				mat[2] = {
+					x = {{{mat2XStart}}};
+					y = {{{mat2YStart}}};
+					z = {{{mat2ZStart}}};
+				}
+			}
+		}
+		renderModelInfo = {
+			model = NULL;
+		}
+		clipModelInfo = {
+            type = "CLIPMODEL_BOX";
+            size = {
+                x = 1;
+                y = 4;
+                z = 1;
+            }
+            clipModelName = NULL;
+        }
+		conservePlayerSpeed = false;
+		exitSpeed = 1;
+		triggerFirst = false;
+		destination = "mod_teleport_destination_{{{entityNumber}}}";
+	}
+}
+}
+entity {
+	entityDef mod_emitter_teleporter_{{{entityNumber}}} {
+	inherit = "func/emitter";
+	class = "idParticleEmitter";
+	expandInheritance = false;
+	poolCount = 0;
+	poolGranularity = 2;
+	networkReplicated = false;
+	disableAIPooling = false;
+	edit = {
+		flags = {
+			canBecomeDormant = true;
+		}
+		dormancy = {
+			delay = 5;
+			distance = 78.029007;
+		}
+		fadeIn = 0;
+		fadeOut = 0;
+		spawnPosition = {
+			x = {{coordX}};
+			y = {{coordY}};
+			z = {{coordZEmit}};
+		}
+		spawnOrientation = { // 0 {{{yawEmit}}} {{{rollEmit}}}
+			mat = {
+				mat[0] = {
+					x = {{{mat0XEmit}}};
+					y = {{{mat0YEmit}}};
+					z = {{{mat0ZEmit}}};
+				}
+				mat[1] = {
+					x = {{{mat1XEmit}}};
+					y = {{{mat1YEmit}}};
+					z = {{{mat1ZEmit}}};
+				}
+				mat[2] = {
+					x = {{{mat2XEmit}}};
+					y = {{{mat2YEmit}}};
+					z = {{{mat2ZEmit}}};
+				}
+			}
+		}
+		renderModelInfo = {
+			scale = {
+				x = 0.600000024;
+				y = 0.600000024;
+				z = 0.600000024;
+			}
+			color = { // #{{{hexVal}}}
+				r = {{{floatColourR}}};
+				g = {{{floatColourG}}};
+				b = {{{floatColourB}}};
+			}
+		}
+		startOff = false;
+		particleSystem = "map_e2m2_base/portal_opening_white";
+	}
+}
+}
+entity {
+	entityDef mod_teleport_destination_{{{entityNumber}}} {
+	inherit = "info/teleport_destination";
+	class = "idInfo_TeleportDestination";
+	expandInheritance = false;
+	poolCount = 0;
+	poolGranularity = 2;
+	networkReplicated = false;
+	disableAIPooling = false;
+	edit = {
+		spawnPosition = {
+			x = {{coordXDest}};
+			y = {{coordYDest}};
+			z = {{coordZDest}};
+		}
+		spawnOrientation = { // 0 {{{yawDest}}} 0
+			mat = {
+				mat[0] = {
+					x = {{{mat0XDest}}};
+					y = {{{mat0YDest}}};
+					z = {{{mat0ZDest}}};
+				}
+				mat[1] = {
+					x = {{{mat1XDest}}};
+					y = {{{mat1YDest}}};
+					z = {{{mat1ZDest}}};
+				}
+				mat[2] = {
+					x = {{{mat2XDest}}};
+					y = {{{mat2YDest}}};
+					z = {{{mat2ZDest}}};
+				}
+			}
+		}
+	}
+}
+}

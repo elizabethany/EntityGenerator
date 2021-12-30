@@ -1,0 +1,40 @@
+entity {
+	entityDef mod_target_spawn_{{{entityDefNum}}} {
+	inherit = "target/spawn";
+	class = "idTarget_Spawn";
+	expandInheritance = false;
+	poolCount = 0;
+	poolGranularity = 2;
+	networkReplicated = false;
+	disableAIPooling = false;
+	edit = {
+		flags = {
+			noFlood = true;
+		}
+		spawnEditable = {
+			spawnAt = "";
+			copyTargets = false;
+			additionalTargets = {
+				num = 0;
+				item[0] = "";
+			}
+			overwriteTraversalFlags = true;
+			traversalClassFlags = "CLASS_A";
+			combatHintClass = "CLASS_ALL";
+			aiStateOverride = "AIOVERRIDE_TELEPORT";
+			spawnAnim = "";
+		}
+		entityDefs = {
+			num = 0;
+			item[0] = {
+				name = "";
+			}
+		}
+		spawnPosition = {
+			x = {{{coordX}}};
+			y = {{{coordY}}};
+			z = {{{coordZ}}};
+		}
+	}
+}
+}

@@ -1,0 +1,44 @@
+entity { 
+    entityDef mod_marker_{{entityDefNum}} {
+    class = "idGuiEntity_Text";
+    expandInheritance = false;
+    poolCount = 0;
+    poolGranularity = 2;
+    networkReplicated = false;
+    disableAIPooling = false;
+    edit = {
+        flags = {
+            noknockback = false;
+        }
+        renderModelInfo = {
+            model = "editors/models/gui_text.lwo";
+            scale = {
+                x = 4;
+                y = 4;
+                z = 4;
+            }
+        }
+        clipModelInfo = {
+            type = "CLIPMODEL_NONE";
+        }
+        swf = "swf/guientity/generic_text.swf";
+        spawnPosition = {
+			x = {{coordX}};
+			y = {{coordY}};
+			z = {{coordZ}};
+		}
+        swfScale = 0.02;
+        headerText = {
+            text = "{{entityDefNum}}";
+            color = {
+                r = 1;
+                g = 1;
+                b = 1;
+            }
+            relativeWidth = 6;
+            alignment = "SWF_ET_ALIGN_CENTER";
+        }
+        billboard = true;
+    }
+}
+}

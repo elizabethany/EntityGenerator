@@ -1,0 +1,24 @@
+entity { // Spawn group for {{encounterName}}
+	entityDef mod_spawngroup_{{encounterNameFormatted}} {
+	inherit = "encounter/spawn_group/zone";
+	class = "idTargetSpawnGroup";
+	expandInheritance = false;
+	poolCount = 0;
+	poolGranularity = 2;
+	networkReplicated = false;
+	disableAIPooling = false;
+	edit = {
+		spawnPosition = {
+			x = 0;
+			y = 0;
+			z = 0;
+		}
+		renderModelInfo = {
+			model = NULL;
+		}
+		clipModelInfo = {
+			clipModelName = NULL;
+		}
+		targetSpawnParent = "mod_master_spawn_parent";
+		spawners = {
+			num = {{totalItems}};

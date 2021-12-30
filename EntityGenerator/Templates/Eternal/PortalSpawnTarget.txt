@@ -1,0 +1,286 @@
+entity {
+	entityDef mod_emitter_portal_opening_{{{entityNumber}}} {
+	inherit = "func/emitter";
+	class = "idParticleEmitter";
+	expandInheritance = false;
+	poolCount = 0;
+	poolGranularity = 2;
+	networkReplicated = false;
+	disableAIPooling = false;
+	edit = {
+		flags = {
+			canBecomeDormant = true;
+		}
+		dormancy = {
+			delay = 5;
+			distance = 78.029007;
+		}
+		fadeIn = 0;
+		fadeOut = 0;
+		spawnPosition = {
+			x = {{{coordX}}};
+			y = {{{coordY}}};
+			z = {{{coordZ}}};
+		}
+		spawnOrientation = { // 0 {{{yawEmit}}} {{{rollEmit}}}
+			mat = {
+				mat[0] = {
+					x = {{{mat0XEmit}}};
+					y = {{{mat0YEmit}}};
+					z = {{{mat0ZEmit}}};
+				}
+				mat[1] = {
+					x = {{{mat1XEmit}}};
+					y = {{{mat1YEmit}}};
+					z = {{{mat1ZEmit}}};
+				}
+				mat[2] = {
+					x = {{{mat2XEmit}}};
+					y = {{{mat2YEmit}}};
+					z = {{{mat2ZEmit}}};
+				}
+			}
+		}
+		renderModelInfo = {
+			fadeVisibilityOver = 100;
+			color = { // #{{{hexVal}}}
+				r = {{{floatColourR}}};
+				g = {{{floatColourG}}};
+				b = {{{floatColourB}}};
+			}
+		}
+		startOff = true;
+		particleSystem = "map_e2m2_base/portal_opening_white";
+	}
+}
+}
+entity {
+	entityDef mod_emitter_portal_closing_{{{entityNumber}}} {
+	inherit = "func/emitter";
+	class = "idParticleEmitter";
+	expandInheritance = false;
+	poolCount = 0;
+	poolGranularity = 2;
+	networkReplicated = false;
+	disableAIPooling = false;
+	edit = {
+		flags = {
+			canBecomeDormant = true;
+		}
+		dormancy = {
+			delay = 5;
+			distance = 78.029007;
+		}
+		fadeIn = 0;
+		fadeOut = 0;
+		spawnPosition = {
+			x = {{{coordX}}};
+			y = {{{coordY}}};
+			z = {{{coordZ}}};
+		}
+		spawnOrientation = { // 0 {{{yawEmit}}} {{{rollEmit}}}
+			mat = {
+				mat[0] = {
+					x = {{{mat0XEmit}}};
+					y = {{{mat0YEmit}}};
+					z = {{{mat0ZEmit}}};
+				}
+				mat[1] = {
+					x = {{{mat1XEmit}}};
+					y = {{{mat1YEmit}}};
+					z = {{{mat1ZEmit}}};
+				}
+				mat[2] = {
+					x = {{{mat2XEmit}}};
+					y = {{{mat2YEmit}}};
+					z = {{{mat2ZEmit}}};
+				}
+			}
+		}
+		renderModelInfo = {
+			fadeVisibilityOver = 100;
+			color = { // #{{{hexVal}}}
+				r = {{{floatColourR}}};
+				g = {{{floatColourG}}};
+				b = {{{floatColourB}}};
+			}
+		}
+		startOff = true;
+		particleSystem = "map_e2m2_base/portal_closing_white";
+	}
+}
+}
+entity {
+	entityDef mod_target_spawn_portal_{{{entityNumber}}} {
+	inherit = "target/spawn";
+	class = "idTarget_Spawn";
+	expandInheritance = false;
+	poolCount = 0;
+	poolGranularity = 2;
+	networkReplicated = false;
+	disableAIPooling = false;
+	edit = {
+		flags = {
+			noFlood = true;
+		}
+		entityDefs = {
+			num = 0;
+			item[0] = {
+				name = "";
+			}
+		}
+		spawnEditable = {
+			spawnAt = "";
+			copyTargets = false;
+			additionalTargets = {
+				num = 0;
+				item[0] = "";
+			}
+			overwriteTraversalFlags = true;
+			traversalClassFlags = "CLASS_A";
+			combatHintClass = "CLASS_ALL";
+			spawnAnim = "animweb/characters/monsters/mancubus_fire/traversal/jump_forward_300";
+			aiStateOverride = "AIOVERRIDE_PLAY_ENTRANCE_ANIMATION_WITH_CORRECTION";
+			initialTargetOverride = "";
+		}
+		spawnPosition = {
+			x = {{{coordXSpawn}}};
+			y = {{{coordYSpawn}}};
+			z = {{{coordZSpawn}}};
+		}
+		spawnOrientation = { // 0 {{{yawSpawn}}} 0
+			mat = {
+				mat[0] = {
+					x = {{{mat0XSpawn}}};
+					y = {{{mat0YSpawn}}};
+					z = {{{mat0ZSpawn}}};
+				}
+				mat[1] = {
+					x = {{{mat1XSpawn}}};
+					y = {{{mat1YSpawn}}};
+					z = {{{mat1ZSpawn}}};
+				}
+				mat[2] = {
+					x = {{{mat2XSpawn}}};
+					y = {{{mat2YSpawn}}};
+					z = {{{mat2ZSpawn}}};
+				}
+			}
+		}
+	}
+}
+}
+entity {
+	entityDef mod_target_timeline_portal_spawn_{{{entityNumber}}} {
+	class = "idTarget_Timeline";
+	expandInheritance = false;
+	poolCount = 0;
+	poolGranularity = 2;
+	networkReplicated = false;
+	disableAIPooling = false;
+	edit = {
+		flags = {
+			noFlood = true;
+		}
+		spawnPosition = {
+			x = {{{coordX}}};
+			y = {{{coordY}}};
+			z = {{{coordZ}}};
+		}
+		componentTimeLine = {
+			entityEvents = {
+				num = 5;
+				item[0] = {
+					entity = "mod_emitter_portal_opening_{{{entityNumber}}}";
+					events = {
+						num = 1;
+						item[0] = {
+							eventCall = {
+								eventDef = "activate";
+								args = {
+									num = 1;
+									item[0] = {
+										entity = "";
+									}
+								}
+							}
+						}
+					}
+				}
+				item[1] = {
+					entity = "mod_target_spawn_portal_{{{entityNumber}}}";
+					events = {
+						num = 1;
+						item[0] = {
+							eventTime = 2250;
+							eventCall = {
+								eventDef = "activate";
+								args = {
+									num = 1;
+									item[0] = {
+										entity = "";
+									}
+								}
+							}
+						}
+					}
+				}
+				item[2] = {
+					entity = "mod_emitter_portal_opening_{{{entityNumber}}}";
+					events = {
+						num = 1;
+						item[0] = {
+							eventTime = 3500;
+							eventCall = {
+								eventDef = "activate";
+								args = {
+									num = 1;
+									item[0] = {
+										entity = "";
+									}
+								}
+							}
+						}
+					}
+				}
+				item[3] = {
+					entity = "mod_emitter_portal_closing_{{{entityNumber}}}";
+					events = {
+						num = 1;
+						item[0] = {
+							eventTime = 3500;
+							eventCall = {
+								eventDef = "activate";
+								args = {
+									num = 1;
+									item[0] = {
+										entity = "";
+									}
+								}
+							}
+						}
+					}
+				}
+				item[4] = {
+					entity = "mod_emitter_portal_closing_{{{entityNumber}}}";
+					events = {
+						num = 1;
+						item[0] = {
+							eventTime = 6000;
+							eventCall = {
+								eventDef = "activate";
+								args = {
+									num = 1;
+									item[0] = {
+										entity = "";
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+}

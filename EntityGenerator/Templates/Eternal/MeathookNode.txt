@@ -1,0 +1,98 @@
+entity { // MH Node {{{entityDefNum}}}
+	entityDef mod_proxy_meathook_{{{entityDefNum}}} {
+	inherit = "target/ai_proxy_meathook";
+	class = "idTarget_SmartAIProxy";
+	expandInheritance = false;
+	poolCount = 0;
+	poolGranularity = 2;
+	networkReplicated = false;
+	disableAIPooling = false;
+	edit = {
+		flags = {
+			noFlood = true;
+		}
+		targetingDecl = "target_aiproxy_meathook";
+		distanceOverride = 25;
+		spawnPosition = {
+			x = {{coordX}};
+			y = {{coordY}};
+			z = {{coordZ}};
+		}
+		renderModelInfo = {
+			scale = {
+				x = 1;
+				y = 1;
+				z = 1;
+			}
+		}
+	}
+}
+}
+entity {
+	entityDef mod_target_proxy_handler_{{{entityDefNum}}} {
+	inherit = "target/proxy_handler";
+	class = "idTargetableProxyHandler";
+	expandInheritance = false;
+	poolCount = 0;
+	poolGranularity = 2;
+	networkReplicated = false;
+	disableAIPooling = false;
+	edit = {
+		isOmnidirectional = true;
+		startInactive = false;
+		cooldownDuration = 3000;
+		connectSound = "play_meat_hook_lock_in";
+		ambientLoopSound = "play_meathook_sphere_amb_loop";
+		oneSidedActiveModel = "art/kit/gameplay/meathook_traversal_a.lwo";
+		oneSidedInactiveModel = "art/kit/gameplay/meathook_traversal_b.lwo";
+		allSidedActiveModel = "art/kit/gameplay/meathook_traversal_c.lwo";
+		allSidedInactiveModel = "art/kit/gameplay/meathook_traversal_d.lwo";
+		oneSidedActiveFXModel = "art/kit/gameplay/meathook_traversal_a_rings.lwo";
+		oneSidedInactiveFXModel = "art/kit/gameplay/meathook_traversal_b_rings.lwo";
+		allSidedActiveFXModel = "art/kit/gameplay/meathook_traversal_c_rings.lwo";
+		allSidedInactiveFXModel = "art/kit/gameplay/meathook_traversal_d_rings.lwo";
+		spawnPosition = {
+			x = {{coordX}};
+			y = {{coordY}};
+			z = {{coordZ}};
+		}
+		spawnOrientation = { // 0 {{{yaw}}} 0
+			mat = {
+				mat[0] = {
+					x = {{{mat0X}}};
+					y = {{{mat0Y}}};
+					z = {{{mat0Z}}};
+				}
+				mat[1] = {
+					x = {{{mat1X}}};
+					y = {{{mat1Y}}};
+					z = {{{mat1Z}}};
+				}
+				mat[2] = {
+					x = {{{mat2X}}};
+					y = {{{mat2Y}}};
+					z = {{{mat2Z}}};
+				}
+			}
+		}
+		renderModelInfo = {
+			model = "maps/game/dlc2/e5m1_spear/e5m1_spear/village_target_proxy_handler_2_183886712";
+			scale = {
+				x = 1;
+				y = 1;
+				z = 1;
+			}
+		}
+		clipModelInfo = {
+			clipModelName = "maps/game/dlc2/e5m1_spear/e5m1_spear/village_target_proxy_handler_2_183886712";
+		}
+		proxyList = {
+			num = 1;
+			item[0] = {
+				proxyEntity = "mod_proxy_meathook_{{{entityDefNum}}}";
+				proxyTagName = "mod_proxytag_meathook_{{{entityDefNum}}}";
+			}
+		}
+	}
+}
+}
