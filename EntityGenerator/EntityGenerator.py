@@ -2,8 +2,8 @@ import time
 import math
 import chevron
 import configparser
-from sys import hexversion
-#from contextlib import redirect_stdout
+from tkinter import *
+from tkinter.colorchooser import askcolor
 
 # Read config file to get operating mode, output files, templates, and other parameters
 config = configparser.ConfigParser()
@@ -13,6 +13,7 @@ settings = config['Settings']
 gameMode = int(settings['gameMode'])
 clearSetting = int(settings['clearSetting'])
 loopGeneration = bool(int(settings['loopGeneration']))
+printToConsole = bool(int(settings['printToConsole']))
 
 output1 = config['Output Files']['output1']
 output2 = config['Output Files']['output2']
@@ -38,6 +39,11 @@ if gameMode == 1:
     Rockets_SingleTemplate = templatesEternal['Rockets_SingleTemplate']
     pmNormalViewHeight = float(miscEternal['pm_normalViewHeight'])
     distanceScale = float(miscEternal['DistanceScale'])
+
+# UI stuffs
+dummyGUIThing = Tk()
+dummyGUIThing.title("Ignore this window")
+dummyGUIThing.geometry("1x1")
 
 # pitch yaw roll to spawnOrientation matrix from Zandy
 def sin_cos(deg):
@@ -99,6 +105,14 @@ def hypotReverse(
         roundToInterval(deltaY, 0.0001)
     ]
 
+# Brings up the colour picker UI for the user to pick a colour, then returns it as an RGB tuple
+def getColour (
+    titleString
+    ):
+
+    colours = askcolor(title = titleString)
+    return tuple(colours[0]) # 0 is RBG, 1 is hex
+
 # Generate MH Node
 def generateMHNode(
     ):
@@ -116,7 +130,7 @@ def generateMHNode(
         yaw = coords[3] + 90
 
         entityOrientation = angle_to_mat3(yaw, 0, 0)
-        print(entityOrientation)
+        #print(entityOrientation)
 
         # args to pass into the templates
         args = {
@@ -139,7 +153,7 @@ def generateMHNode(
         # Open templates and pass through args
         with open(MHNodeTemplate, 'r') as entityTemplate:
             generatedEntity1 = chevron.render(entityTemplate, args)
-            print(generatedEntity1) # print generated entity 
+            printEntityToConsole(generatedEntity1) # print generated entity 
         
         # Call function to write generated entities to file
         writeStuffToFile(generatedEntity1, output1)
@@ -180,7 +194,7 @@ def generateSpawnTarget(
         # Open spawn target template and pass through args, then wrtie to file
         with open(SpawnTargetTemplate, 'r') as entityTemplate1:
             generatedEntity1 = chevron.render(entityTemplate1, spawnTargetArgs)
-            print(generatedEntity1) # print generated spawn target
+            printEntityToConsole(generatedEntity1) # print generated spawn target
         writeStuffToFile(generatedEntity1, output1)
 
         # Do the same for markers if the option was selected
@@ -210,7 +224,6 @@ def generateSpawnGroup(
 
         tempStartNum = startSpawnTargetNum;
         tempStartString = "";
-        bufferString = "";
 
         # Stuff to pass into the main template
         mainArgs = {
@@ -222,7 +235,7 @@ def generateSpawnGroup(
         # Open template and pass through args
         with open(SpawnGroupTemplate1, 'r') as spawnGroup_Template:
             spawnGroupTemplateOutput = chevron.render(spawnGroup_Template, mainArgs)
-            print(spawnGroupTemplateOutput) # print generated entity
+            printEntityToConsole(spawnGroupTemplateOutput) # print generated entity
         
         # Call function to write generated entities to file
         writeStuffToFile(spawnGroupTemplateOutput, output1)
@@ -236,16 +249,16 @@ def generateSpawnGroup(
             }
             with open(SpawnGroupTemplate2, 'r') as secondary_Template:
                 secondaryOutput = chevron.render(secondary_Template, secondaryArgs)
-            print(secondaryOutput)
+            printEntityToConsole(secondaryOutput)
             writeStuffToFile(secondaryOutput, output1)
             tempStartNum += 1;
         writeStuffToFile('		}\n	}\n}\n}', output1)
-        print('		}\n	}\n}\n}')
+        printEntityToConsole('		}\n	}\n}\n}')
 
         if loopGeneration == False:
             break
 
-# Generate traversal chains
+# Generate traversal chains (WIP)
 def generateTraversalChain(
     ):
     
@@ -298,9 +311,9 @@ def generateTraversalChain(
         }
         
         # Open templates and pass through args
-        with open(template1, 'r') as entityTemplate:
+        with open(TraversalChainTemplate, 'r') as entityTemplate:
             entityTemplateOutput = chevron.render(entityTemplate, entityArgs)
-            print(entityTemplateOutput) # print generated entity
+            printEntityToConsole(entityTemplateOutput) # print generated entity
         
         # Call function to write generated entities to file
         writeStuffToFile(entityTemplateOutput, output1)
@@ -310,93 +323,111 @@ def generateTraversalChain(
         if loopGeneration == False:
             break
 
-# Generate Teleporter + Emitter + Destination
-def generateTeleporter(
+# Get the coords and other stuffs to pass into the actual portal generation function.
+def getPortalCoords(
     ):
-    
+
     # Set number to append at end of entity name
     entityNameNumber = int(input("\nSet entity numbering start value: "));
-    
+
     while True:
         # Get coords
         coordsStart = list(map(float, input("Starting coords: ").split()));
         coordsEnd = list(map(float, input("Destination coords: ").split()));
 
-        hexVal = input("Portal colour in hex: #") # 9326ff
-        colourFloat = hexToFloatColour(hexVal)
+        reciprocalPortal = str(input("Create a reciprocal portal? (Y/N): "))
         
-        # Leading zeros padding
-        entityNameString = str(entityNameNumber).zfill(3)
+        dummyGUIThing.withdraw()
+        colourRGB = getColour("Pick a colour for the portal(s)")
 
-        # Round yaw value to nearest 5° (0 yaw+90 90)
-        yawStart = roundToInterval(coordsStart[3], 5)
-        yawEmit = roundToInterval(coordsStart[3], 5) + 90
-        yawDest = roundToInterval(coordsEnd[3], 5)
-        rollEmit = 90
-
-        startOrientation = angle_to_mat3(yawStart, 0, 0)
-        emitOrientation = angle_to_mat3(yawEmit, 0, rollEmit)
-        destOrientation = angle_to_mat3(yawDest, 0, 0)
-
-        # args to pass into the templates
-        args = {
-            'entityNumber': entityNameString,
-            'coordX': coordsStart[0],
-            'coordY': coordsStart[1],
-            'coordZ': coordsStart[2] - pmNormalViewHeight,
-            'coordZEmit': coordsStart[2],
-            'coordXDest': coordsEnd[0],
-            'coordYDest': coordsEnd[1],
-            'coordZDest': coordsEnd[2] - pmNormalViewHeight,
-            'yawStart' : yawStart,
-            'yawEmit' : yawEmit,
-            'yawDest' : yawDest,
-            'rollEmit' : rollEmit,
-            'hexVal' : hexVal,
-            'floatColourR' : colourFloat[0],
-            'floatColourG' : colourFloat[1],
-            'floatColourB' : colourFloat[2],
-            'mat0XStart' : roundToInterval(startOrientation[0], 0.0001),
-            'mat0YStart' : roundToInterval(startOrientation[1], 0.0001),
-            'mat0ZStart' : roundToInterval(startOrientation[2], 0.0001),
-            'mat1XStart' : roundToInterval(startOrientation[3], 0.0001),
-            'mat1YStart' : roundToInterval(startOrientation[4], 0.0001),
-            'mat1ZStart' : roundToInterval(startOrientation[5], 0.0001),
-            'mat2XStart' : roundToInterval(startOrientation[6], 0.0001),
-            'mat2YStart' : roundToInterval(startOrientation[7], 0.0001),
-            'mat2ZStart' : roundToInterval(startOrientation[8], 0.0001),
-            'mat0XEmit' : roundToInterval(emitOrientation[0], 0.0001),
-            'mat0YEmit' : roundToInterval(emitOrientation[1], 0.0001),
-            'mat0ZEmit' : roundToInterval(emitOrientation[2], 0.0001),
-            'mat1XEmit' : roundToInterval(emitOrientation[3], 0.0001),
-            'mat1YEmit' : roundToInterval(emitOrientation[4], 0.0001),
-            'mat1ZEmit' : roundToInterval(emitOrientation[5], 0.0001),
-            'mat2XEmit' : roundToInterval(emitOrientation[6], 0.0001),
-            'mat2YEmit' : roundToInterval(emitOrientation[7], 0.0001),
-            'mat2ZEmit' : roundToInterval(emitOrientation[8], 0.0001),
-            'mat0XDest' : roundToInterval(destOrientation[0], 0.0001),
-            'mat0YDest' : roundToInterval(destOrientation[1], 0.0001),
-            'mat0ZDest' : roundToInterval(destOrientation[2], 0.0001),
-            'mat1XDest' : roundToInterval(destOrientation[3], 0.0001),
-            'mat1YDest' : roundToInterval(destOrientation[4], 0.0001),
-            'mat1ZDest' : roundToInterval(destOrientation[5], 0.0001),
-            'mat2XDest' : roundToInterval(destOrientation[6], 0.0001),
-            'mat2YDest' : roundToInterval(destOrientation[7], 0.0001),
-            'mat2ZDest' : roundToInterval(destOrientation[8], 0.0001)
-        }
-        
-        # Open templates and pass through args
-        with open(TeleporterTemplate, 'r') as entityTemplate:
-            generatedEntity1 = chevron.render(entityTemplate, args)
-            print(generatedEntity1) # print generated entity 
-        
-        # Call function to write generated entities to file
-        writeStuffToFile(generatedEntity1, output1)
+        generateTeleporter(entityNameNumber, coordsStart, coordsEnd, colourRGB)
 
         entityNameNumber += 1; # increment by 1 after every entity
+        
+        # If the user wants a reciprocal portal, then call generateTeleporter again, but pass in coordsEnd as coordsStart and vice versa
+        if reciprocalPortal == 'Y' or reciprocalPortal == 'y':
+             generateTeleporter(entityNameNumber, coordsEnd, coordsStart, colourRGB)
 
         if loopGeneration == False:
             break
+
+# Generate Teleporter + Emitter + Destination
+def generateTeleporter(
+    entityNameNumber,
+    coordsStart,
+    coordsEnd,
+    colourRGB
+    ):
+    
+    # Leading zeros padding
+    entityNameString = str(entityNameNumber).zfill(3)
+
+    # Round yaw value to nearest 5° (0 yaw+90 90)
+    yawStart = roundToInterval(coordsStart[3], 5)
+    yawEmit = roundToInterval(coordsStart[3], 5) + 90
+    yawDest = roundToInterval(coordsEnd[3], 5)
+    rollEmit = 90
+
+    startOrientation = angle_to_mat3(yawStart, 0, 0)
+    emitOrientation = angle_to_mat3(yawEmit, 0, rollEmit)
+    destOrientation = angle_to_mat3(yawDest, 0, 0)
+
+    # args to pass into the templates
+    args = {
+        'entityNumber': entityNameString,
+        'coordX': coordsStart[0],
+        'coordY': coordsStart[1],
+        'coordZ': coordsStart[2] - pmNormalViewHeight,
+        'coordZEmit': coordsStart[2],
+        'coordXDest': coordsEnd[0],
+        'coordYDest': coordsEnd[1],
+        'coordZDest': coordsEnd[2] - pmNormalViewHeight,
+        'yawStart' : yawStart,
+        'yawEmit' : yawEmit,
+        'yawDest' : yawDest,
+        'rollEmit' : rollEmit,
+        'r' : colourRGB[0],
+        'g' : colourRGB[1],
+        'b' : colourRGB[2],
+        'floatColourR' : colourRGB[0]/255,
+        'floatColourG' : colourRGB[1]/255,
+        'floatColourB' : colourRGB[2]/255,
+        'mat0XStart' : roundToInterval(startOrientation[0], 0.0001),
+        'mat0YStart' : roundToInterval(startOrientation[1], 0.0001),
+        'mat0ZStart' : roundToInterval(startOrientation[2], 0.0001),
+        'mat1XStart' : roundToInterval(startOrientation[3], 0.0001),
+        'mat1YStart' : roundToInterval(startOrientation[4], 0.0001),
+        'mat1ZStart' : roundToInterval(startOrientation[5], 0.0001),
+        'mat2XStart' : roundToInterval(startOrientation[6], 0.0001),
+        'mat2YStart' : roundToInterval(startOrientation[7], 0.0001),
+        'mat2ZStart' : roundToInterval(startOrientation[8], 0.0001),
+        'mat0XEmit' : roundToInterval(emitOrientation[0], 0.0001),
+        'mat0YEmit' : roundToInterval(emitOrientation[1], 0.0001),
+        'mat0ZEmit' : roundToInterval(emitOrientation[2], 0.0001),
+        'mat1XEmit' : roundToInterval(emitOrientation[3], 0.0001),
+        'mat1YEmit' : roundToInterval(emitOrientation[4], 0.0001),
+        'mat1ZEmit' : roundToInterval(emitOrientation[5], 0.0001),
+        'mat2XEmit' : roundToInterval(emitOrientation[6], 0.0001),
+        'mat2YEmit' : roundToInterval(emitOrientation[7], 0.0001),
+        'mat2ZEmit' : roundToInterval(emitOrientation[8], 0.0001),
+        'mat0XDest' : roundToInterval(destOrientation[0], 0.0001),
+        'mat0YDest' : roundToInterval(destOrientation[1], 0.0001),
+        'mat0ZDest' : roundToInterval(destOrientation[2], 0.0001),
+        'mat1XDest' : roundToInterval(destOrientation[3], 0.0001),
+        'mat1YDest' : roundToInterval(destOrientation[4], 0.0001),
+        'mat1ZDest' : roundToInterval(destOrientation[5], 0.0001),
+        'mat2XDest' : roundToInterval(destOrientation[6], 0.0001),
+        'mat2YDest' : roundToInterval(destOrientation[7], 0.0001),
+        'mat2ZDest' : roundToInterval(destOrientation[8], 0.0001)
+    }
+    
+    # Open templates and pass through args
+    with open(TeleporterTemplate, 'r') as entityTemplate:
+        generatedEntity1 = chevron.render(entityTemplate, args)
+        printEntityToConsole(generatedEntity1)
+    
+    # Call function to write generated entities to file
+    writeStuffToFile(generatedEntity1, output1)
 
 # Generate shock trap
 def generateShockTrap(
@@ -406,6 +437,16 @@ def generateShockTrap(
         instanceID = (input("\nEnter instance ID: ")).zfill(5)
         coords = list(map(float, input("Enter entity coordinates: ").split()));
         
+        customColours = input("Use custom colours? [May not look good] (Y/N): ")
+        if customColours == "Y" or customColours == "y":
+            dummyGUIThing.withdraw()
+            rgbHazard = getColour("Pick a colour for when the trap is on")
+        else:
+            rgbHazard = tuple((255, 55, 15))
+            
+        rgbOff = tuple((0, 199, 255))    
+        rgbOn = tuple((255, 78, 51))
+
         # args to pass into the templates
         args = {
             'instanceID' : "1" + instanceID,
@@ -416,13 +457,31 @@ def generateShockTrap(
             'coordZ2': coords[2] - pmNormalViewHeight - 1.060002,
             'coordZ3': coords[2] - pmNormalViewHeight + 2.885204,
             'coordZ4': coords[2] - pmNormalViewHeight + 1.5,
-            'coordZ5': coords[2] - pmNormalViewHeight + 3.320293
+            'coordZ5': coords[2] - pmNormalViewHeight + 3.320293,
+            'rgbHazardR' : rgbHazard[0],
+            'rgbHazardG' : rgbHazard[1],
+            'rgbHazardB' : rgbHazard[2],
+            'rgbHazardFloatR' : rgbHazard[0]/255,
+            'rgbHazardFloatG' : rgbHazard[1]/255,
+            'rgbHazardFloatB' : rgbHazard[2]/255,
+            'rgbOffR' : rgbOff[0],
+            'rgbOffG' : rgbOff[1],
+            'rgbOffB' : rgbOff[2],
+            'rgbOffFloatR' : rgbOff[0]/255,
+            'rgbOffFloatG' : rgbOff[1]/255,
+            'rgbOffFloatB' : rgbOff[2]/255,
+            'rgbOnR' : rgbOn[0],
+            'rgbOnG' : rgbOn[1],
+            'rgbOnB' : rgbOn[2],
+            'rgbOnFloatR' : rgbOn[0]/255,
+            'rgbOnFloatG' : rgbOn[1]/255,
+            'rgbOnFloatB' : rgbOn[2]/255
         }
         
         # Open templates and pass through args
         with open(ShockTrapTemplate, 'r') as entityTemplate:
             generatedEntity = chevron.render(entityTemplate, args)
-            print(generatedEntity) # print generated entity
+            printEntityToConsole(generatedEntity) # print generated entity
         
         # Call function to write generated entities to file
         writeStuffToFile(generatedEntity, output1)
@@ -441,8 +500,8 @@ def generatePortalSpawnTarget(
         # Get coords
         coords = list(map(float, input("Portal coords: ").split()));
 
-        hexVal = input("Portal colour in hex: #") # 9326ff
-        colourFloat = hexToFloatColour(hexVal)
+        dummyGUIThing.withdraw()
+        colourRGB = getColour("Pick a colour for the portal")
         
         # Leading zeros padding
         entityNameString = str(entityNameNumber).zfill(3)
@@ -469,10 +528,12 @@ def generatePortalSpawnTarget(
             'coordZSpawn' : coords[2] - pmNormalViewHeight,
             'yawEmit' : yawEmit,
             'rollEmit' : rollEmit,
-            'hexVal' : hexVal,
-            'floatColourR' : colourFloat[0],
-            'floatColourG' : colourFloat[1],
-            'floatColourB' : colourFloat[2],
+            'r' : colourRGB[0],
+            'g' : colourRGB[1],
+            'b' : colourRGB[2],
+            'floatColourR' : colourRGB[0]/255,
+            'floatColourG' : colourRGB[1]/255,
+            'floatColourB' : colourRGB[2]/255,
             'mat0XEmit' : roundToInterval(emitOrientation[0], 0.0001),
             'mat0YEmit' : roundToInterval(emitOrientation[1], 0.0001),
             'mat0ZEmit' : roundToInterval(emitOrientation[2], 0.0001),
@@ -497,7 +558,7 @@ def generatePortalSpawnTarget(
         # Open templates and pass through args
         with open(PortalSpawnTargetTemplate, 'r') as entityTemplate:
             generatedEntity1 = chevron.render(entityTemplate, args)
-            print(generatedEntity1) # print generated entity 
+            printEntityToConsole(generatedEntity1) # print generated entity 
         
         # Call function to write generated entities to file
         writeStuffToFile(generatedEntity1, output1)
@@ -516,6 +577,14 @@ idProp2Type = {
     5: Rockets_SingleTemplate
 }
 
+idProp2TypeStrings = {
+    1: "BFG",
+    2: "Bullets",
+    3: "Plasma Cells",
+    4: "Shells",
+    5: "Rockets (single)"
+}
+
 # Generate idProp2 pickup
 def generatePickup(
     ):
@@ -524,7 +593,21 @@ def generatePickup(
     entityNameNumber = int(input("\nSet entity numbering start value: ")); 
     
     # Select the pickup type to generate
-    pickupIndex = int(input("Pickup Type:\n1. BFG\n2. Bullets\n3. Plasma Cells\n4. Shells\n5. Rockets (single)\n"))
+    print("Pickup Type:")
+    for i in range (1, len(idProp2TypeStrings) + 1):
+        print(str(i) + ". " + idProp2TypeStrings[i])
+
+    pickupIndex = int(input())
+    while True:
+        if pickupIndex > len(idProp2TypeStrings) or pickupIndex < 1:
+            pickupIndex = int(input("Invalid option, try again: "))
+        else:
+            break
+
+    if pickupIndex > 5:
+        doCompensation = 0
+    else:
+        doCompensation = pmNormalViewHeight
 
     while True:
         # Get coords
@@ -540,7 +623,7 @@ def generatePickup(
             'entityDefNum': entityNameString,
             'coordX': coords[0],
             'coordY': coords[1],
-            'coordZ': coords[2] - pmNormalViewHeight,
+            'coordZ': coords[2] - doCompensation,
             'yaw' : coords[3],
             'mat0X' : roundToInterval(spawnOrientation[0], 0.0001),
             'mat0Y' : roundToInterval(spawnOrientation[1], 0.0001),
@@ -556,7 +639,7 @@ def generatePickup(
         # Open template and pass through args
         with open(idProp2Type[pickupIndex], 'r') as entityTemplate:
             generatedEntity1 = chevron.render(entityTemplate, args)
-            print(generatedEntity1) # print generated entity 
+            printEntityToConsole(generatedEntity1) # print generated entity 
         
         # Call function to write generated entities to file
         writeStuffToFile(generatedEntity1, output1)
@@ -585,7 +668,7 @@ def selectEntityTypeEternal(
         2 : generateSpawnTarget,
         3 : generateSpawnGroup,
         4 : generatePortalSpawnTarget,
-        5 : generateTeleporter,
+        5 : getPortalCoords,
         6 : generateShockTrap,
         7 : generatePickup
     }
@@ -622,6 +705,14 @@ def clearOutput(
     with open(output2, 'w') as outFile:
         outFile.write("")
         outFile.close()
+
+# Dedicated function for printing generated entities to console
+def printEntityToConsole(
+    printThisItem
+    ):
+
+    if printToConsole == True:
+        print(printThisItem)
 
 # "Main" function
 def mainBody(

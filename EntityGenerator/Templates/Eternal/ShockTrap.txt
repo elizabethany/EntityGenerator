@@ -242,9 +242,10 @@ entity {
 				}
 			}
 		}
-		lightColor = {
-			g = 0.305882007;
-			b = 0.199999988;
+		lightColor = { // (R:{{{rgbOnR}}}, G:{{{rgbOnG}}}, B:{{{rgbOnB}}})
+			r = {{{rgbOnFloatR}}};
+			g = {{{rgbOnFloatG}}};
+			b = {{{rgbOnFloatB}}};
 		}
 		lightIntensity = 4;
 		lightRadius = {
@@ -483,9 +484,10 @@ entity {
 			item[0] = "game_pole_{{{instanceID}}}";
 			item[1] = "game_base_{{{instanceID}}}";
 		}
-		lightColor = {
-			r = 0;
-			g = 0.780391991;
+		lightColor = { // (R:{{{rgbOffR}}}, G:{{{rgbOffG}}}, B:{{{rgbOffB}}})
+			r = {{{rgbOffFloatR}}};
+			g = {{{rgbOffFloatG}}};
+			b = {{{rgbOffFloatB}}};
 		}
 		lightIntensity = 0;
 		lightRadius = {
@@ -665,9 +667,10 @@ entity {
 			}
 		}
 		renderModelInfo = {
-			color = {
-				g = 0.215685993;
-				b = 0.0588235036;
+			color = { // (R:{{{rgbHazardR}}}, G:{{{rgbHazardG}}}, B:{{{rgbHazardB}}})
+				r = {{{rgbHazardFloatR}}};
+				g = {{{rgbHazardFloatG}}};
+				b = {{{rgbHazardFloatB}}};
 			}
 			scale = {
 				x = 1.000000;
