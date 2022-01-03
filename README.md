@@ -19,7 +19,7 @@ Eternal version requires resources with generic_text.swf and other related files
 
 **Spawn Group**
 
-The name of the spawn group will have spaces replaced with underscores if present, but otherwise can be any character that is acceptable in an entity's name. When it asks for the numbering, it presumes that your spawn targets are named in the format `some_constant_name_###`. For example, if you have `mod_spawn_target_006`, `mod_spawn_target_007`, `mod_spawn_target_008` ... `mod_spawn_target_0013`, then you'd enter 6 and 13 as the first and last spawn targets, and you'll get a spawn group with `mod_spawn_target_006` all the way to `mod_spawn_target_0013`. But if you're spawn targets don't use this naming format, then it won't work.
+The name of the spawn group will have spaces replaced with underscores if present, but otherwise can have any characters that are acceptable in an entity's name. When it asks for the numbering, it presumes that your spawn targets are named in the format `some_constant_name_###`. For example, if you have `mod_spawn_target_006`, `mod_spawn_target_007`, `mod_spawn_target_008` ... `mod_spawn_target_0013`, then you'd enter 6 and 13 as the first and last spawn targets, and you'll get a spawn group with `mod_spawn_target_006` all the way to `mod_spawn_target_0013`. But if you're spawn targets don't use this naming format, then it won't work.
 
 **Teleporter**
 
