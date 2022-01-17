@@ -1,5 +1,5 @@
 # EntityGenerator
-A Python script to generate entites from text templates, using coordinates and other parameters that you enter.
+A Python script to generate entites from text templates, using coordinates and other parameters that you enter. Requires the Chevron module.
 
 ## General Usage
 I wrote the script based on coordinates being gathered using the `where` command, and then pasting it into the console. You can also manually enter them, in the format `x y z yaw`, ex. `10.27 231.11 54.62 90`. Some entities may not need a yaw value, and only take the xyz coords.
